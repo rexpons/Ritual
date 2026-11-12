@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ritual nocturno</title>
+<meta name="theme-color" content="#120d12">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1e9e4;--sf:#e8dcd5;--tx:#2a1820;--mu:#6e5a62;--ac:#8c1c3a;--ln:#d3c3bc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#120d12;--sf:#1c141b;--tx:#eadfe2;--mu:#a8949b;--ac:#c4405f;--ln:#34262f}}
+:root[data-theme="dark"]{--bg:#120d12;--sf:#1c141b;--tx:#eadfe2;--mu:#a8949b;--ac:#c4405f;--ln:#34262f}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main,header{max-width:560px;margin:0 auto;padding:0 18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:22px;padding-bottom:6px}
+h1{margin:0;font:italic 500 38px/1.05 "Cormorant Garamond",Georgia,serif}
+.sub{margin:4px 0 0;color:var(--mu);font-size:14px}
+.moon{width:58px;height:58px;flex:none;border-radius:50%;background:conic-gradient(var(--ac) calc(var(--p)*1%),var(--ln) 0);display:grid;place-items:center;position:relative}
+.moon::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--bg)}
+.moon span{position:relative;font-size:13px;font-weight:600}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:1px solid var(--ln);display:flex;max-width:560px;margin:10px auto 0;padding:0 10px;overflow-x:auto}
+nav button{flex:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);font:inherit;font-size:15px;padding:12px 10px;cursor:pointer}
+nav button[aria-selected="true"]{color:var(--tx);border-bottom-color:var(--ac);font-weight:600}
+.intro{margin:18px 0 6px;font:italic 500 21px/1.25 "Cormorant Garamond",Georgia,serif}
+.intro small{display:block;color:var(--mu);font:14px/1.4 system-ui,sans-serif;font-style:normal;margin-top:2px}
+.bar{display:flex;gap:3px;margin-top:14px}
+.bar i{flex:1;height:5px;border-radius:3px;background:var(--ln)}
+.bar i.on{background:var(--ac)}
+.bar i.cur{background:var(--mu)}
+.card{border:1px solid var(--ln);background:var(--sf);border-radius:16px;padding:22px 20px;margin-top:16px}
+.ph{margin:0;color:var(--ac);font-size:14px;font-weight:600}
+.card h2{margin:8px 0 2px;font:italic 500 34px/1.1 "Cormorant Garamond",Georgia,serif}
+.mi{margin:0;color:var(--mu);font-size:14px}
+.how{margin:16px 0 0}
+.why{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--ln);color:var(--mu);font-size:15px}
+.card b{color:var(--ac)}
+.btns{display:flex;gap:10px;margin-top:24px}
+.btn{flex:1;padding:15px 10px;border-radius:12px;border:1px solid var(--ln);background:none;color:var(--tx);font:inherit;cursor:pointer}
+.btn.p{flex:2.2;background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+.all{margin-top:18px}
+.all summary{cursor:pointer;color:var(--mu);font-size:14px}
+.all ol{margin:10px 0 0;padding:0;list-style:none}
+.all li{padding:7px 0;border-bottom:1px solid var(--ln);font-size:14px;display:flex;gap:8px}
+.all li.on{color:var(--mu);text-decoration:line-through}
+.all li i{font-style:normal;color:var(--mu);margin-left:auto;flex:none}
+.all h3{margin:14px 0 0;font-size:13px;color:var(--ac)}
+ul{list-style:none;margin:0;padding:0}
+li.k{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--ln)}
+details{flex:1;min-width:0}
+summary{cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+.t{font-weight:600}
+details p{margin:8px 0 0;font-size:15px}
+details b{color:var(--ac)}
+.due .st{color:var(--ac);font-weight:600}
+.st{font-size:13px;color:var(--mu);margin-top:2px}
+.mk{flex:none;align-self:center;background:var(--sf);color:var(--tx);border:1px solid var(--ln);border-radius:8px;font:inherit;font-size:13px;padding:8px 10px;cursor:pointer}
+.note{margin:22px 0 40px;color:var(--mu);font-size:13px}
+.need{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--ln);font-size:15px}
+.need b{color:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1px solid var(--ln);border-radius:999px;padding:4px 10px;font-size:13px;color:var(--mu)}
+.chip.no{border-color:var(--ac);color:var(--ac);font-weight:600}
+.sum{margin:12px 0 8px;font-size:15px}
+.ct{margin:22px 0 2px;font:italic 500 23px/1.2 "Cormorant Garamond",Georgia,serif}
+.it{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--ln)}
+.it button{width:28px;height:28px;flex:none;border-radius:50%;border:1.5px solid var(--mu);background:none;color:#fff;font-size:15px;cursor:pointer;padding:0}
+.it.have button{background:var(--ac);border-color:var(--ac)}
+.it span{flex:1}
+.it.dd{align-items:flex-start}
+.it.dd details{flex:1}
+.it small{display:block;color:var(--mu);font-size:13px}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Ritual nocturno</h1><p class="sub">Tu cuidado completo, paso a paso.</p></div>
+  <div class="moon" id="moon" style="--p:0"><span id="mt">0/0</span></div>
+</header>
+<nav id="nav" role="tablist"></nav>
+<main id="main"></main>
+<script>
+var PH=["Antes de la ducha · piel seca","En la ducha · piel mojada","Después de la ducha · piel seca","Para cerrar la noche","Antes de la ducha · remojo de pies"];
+var S=[
+["dient",1,"Dientes y lengua",4,0,"Cepillá 2 minutos en círculos suaves, con el cepillo inclinado hacia la encía. Pasá hilo dental entre todos los dientes. Terminá pasando el limpiador de lengua de atrás hacia adelante, 5 a 7 pasadas, enjuagándolo entre pasadas. El enjuague bucal es opcional.","Con anosmia no notás tu aliento. El mal aliento nace sobre todo en la lengua y entre los dientes."],
+["barbaR",3,"Recortar la barba",6,0,"Con la barba seca y peinada, definí el contorno de mejillas y cuello con recortadora o afeitadora y emparejá el largo con el peine guía.","Hacerlo antes de mojarte te deja enjuagar todos los pelitos en la ducha."],
+["remojo",3,"Remojar los pies",15,4,"Llená una palangana con agua tibia, de 35 a 38 °C, que se sienta agradable en la mano. Sumergí los pies de 10 a 15 minutos, nunca más de 20. Podés sumar sal gruesa o de Epsom. Después seguí con la ducha: la piedra pómez va ahí, con la piel ya ablandada.","Ablanda la piel y las uñas, relaja y prepara los pies. Evitalo si tenés diabetes, poca sensibilidad en los pies o heridas abiertas."],
+["ducha",1,"Enjabonar el cuerpo",6,1,"Mojate con agua tibia, no caliente. Enjabonate con las manos o una esponja: axilas, ingle, zona anal, pies y entre los dedos, detrás de las orejas, cuello, ombligo y espalda (con un cepillo de mango largo, si tenés). Enjuagá hasta que no quede jabón.","Son las zonas con más sudor y bacterias, y de ahí sale el olor. El agua muy caliente reseca piel y pelo."],
+["intima",1,"Zona íntima",2,1,"Con agua tibia y jabón neutro sin perfume, lavá solo la parte externa y los pliegues. Si tenés prepucio, retraelo con suavidad y lavá debajo. Enjuagá bien. No uses jabón en el interior del cuerpo.","Es una de las zonas con más sudor y bacterias, de donde más olor sale sin que lo notes. Los jabones perfumados irritan."],
+["exfc",3,"Exfoliar el cuerpo",5,1,"Con un guante exfoliante o cepillo corporal, hacé círculos suaves, sin presionar, en brazos, piernas, espalda y torso, siempre hacia el corazón. Evitá la cara, la piel irritada y las heridas. Enjuagá. Máximo 1 o 2 veces por semana.","Saca la piel muerta, previene vellos encarnados y deja la piel más suave. Si se hace seguido, irrita."],
+["pies",3,"Piedra pómez en los pies",3,1,"Con los pies bien mojados, pasá la piedra pómez o lima de pies en talones y callos, con movimientos suaves. Enjuagá.","La piel mojada se pule mejor. Evita grietas y callos duros."],
+["pelo",2,"Lavar el pelo con shampoo",4,1,"Mojá bien el pelo. Repartí el shampoo en las manos y masajeá el cuero cabelludo con las yemas, no con las uñas. Si usás el anticaspa, dejalo actuar de 3 a 5 minutos antes de enjuagar. Enjuagá bien.","El shampoo limpia la grasa del cuero cabelludo. Lavalo de 2 a 4 veces por semana según lo graso que se ponga. Con caspa, empezá con 3 o 4 veces y usá el anticaspa en la mayoría: dejarlo actuar es lo que lo hace funcionar."],
+["acon",2,"Acondicionador",3,1,"Aplicalo solo en los largos y las puntas, sin tocar el cuero cabelludo. Dejalo 2 minutos y enjuagá.","Protege y suaviza el largo del pelo."],
+["masc",3,"Mascarilla de pelo",6,1,"En lugar del acondicionador común, aplicala en largos y puntas, dejala actuar 5 minutos y enjuagá bien.","Nutre y repara el pelo. Es el acondicionador reforzado de la rutina completa."],
+["barba",2,"Lavar la barba",3,1,"Mojá la barba con agua tibia y lavala con un shampoo suave, como el Pantene de hidratación. Reservá el anticaspa para el cuero cabelludo, o usalo solo en la piel de abajo si hay escamas. Masajeá la piel y enjuagá. Después poné un poco de acondicionador solo en la barba, esperá 2 minutos y enjuagá bien.","Los shampoos anticaspa limpian fuerte y le sacan la grasa natural a los pelos de la barba, que son gruesos y se resecan. El acondicionador les devuelve la suavidad."],
+["cara",2,"Limpiar la cara",3,1,"Con limpiador suave, masajeá la cara 1 minuto con las yemas y enjuagá con agua tibia.","Saca grasa, sudor y suciedad del día."],
+["exff",3,"Exfoliar la cara",3,1,"Con la cara mojada, usá un exfoliante facial suave haciendo círculos livianos 30 segundos, sin la zona de los ojos. Enjuagá. Solo 1 vez por semana.","Elimina células muertas y ayuda a que la crema se absorba mejor."],
+["unas1",1,"Limpiar debajo de las uñas",1,1,"Con un cepillito de uñas y jabón, frotá debajo de cada uña de manos y pies. Enjuagá y cerrá la ducha.","Con uñas largas se acumula suciedad y bacterias, y eso puede oler sin que lo notes."],
+["seca",1,"Secarte completo",4,2,"Secate todo el cuerpo con toques de toalla hasta que no quede nada de humedad: axilas, ingle, entre los dedos de los pies y detrás de las rodillas. Desde este paso, todo lo que sigue va sobre piel seca.","Donde queda humedad proliferan hongos y bacterias, y las cremas y el antitranspirante funcionan mejor sobre piel seca."],
+["orej",1,"Orejas por fuera y ombligo",2,2,"Con la punta de la toalla o un paño húmedo, limpiá el pabellón de la oreja, los pliegues y detrás de la oreja. No metas nada en el conducto: ni cotonetes ni palitos. Para el ombligo, usá un cotonete apenas humedecido con alcohol, solo si acumula suciedad.","La cera dentro del oído es normal y se limpia sola. Los cotonetes la empujan hacia adentro y pueden dañar el tímpano. Si sentís tapón, dolor o te cuesta oír, consultá a un médico."],
+["anti",1,"Antitranspirante",1,2,"Sobre las axilas ya secas, 2 o 3 pasadas.","De noche sudás poco y las sales de aluminio tienen tiempo de formar un tapón temporal en los conductos del sudor. El efecto dura más de un día."],
+["crcu",3,"Crema en el cuerpo",4,2,"Poné crema en brazos, piernas, torso y espalda hasta donde llegues, con masajes suaves.","Evita la resequedad que deja la ducha y la exfoliación."],
+["cara2",2,"Hidratar la cara y los labios",2,2,"Poné hidratante en la cara con toques suaves y bálsamo en los labios. El protector solar va por la mañana.","Repone la hidratación después de limpiar."],
+["barbaA",2,"Aceite de barba",2,2,"Con la barba seca, repartí 3 a 5 gotas de aceite entre las manos y pasalas por la barba y la piel de abajo. Peinala. Si la sentís áspera, agregá un poco de bálsamo.","Suaviza el pelo y cuida la piel de abajo."],
+["peina",2,"Secar y peinar el pelo",4,2,"Secalo a toques con una remera o toalla de microfibra, sin frotar. Peinalo de las puntas hacia la raíz con peine de dientes anchos.","Frotar el pelo mojado lo rompe. Peinarlo con cuidado evita quiebres."],
+["piesh",2,"Hidratar los pies",2,2,"Poné crema en la planta, el talón y el empeine. No pongas entre los dedos: ahí podés usar un poco de talco, siempre con los dedos bien secos.","Evita grietas, y entre los dedos la humedad trae hongos."],
+["manos",1,"Crema de manos y cutículas",2,2,"Poné crema de manos y una gota de aceite en cada cutícula, masajeando en círculos.","Evita resequedad, pellejos y uñas quebradizas."],
+["lima",2,"Limar las uñas de las manos",4,3,"Limá siempre en una dirección, del borde al centro, hasta una forma ovalada o de almendra. No uses cortaúñas si las querés largas.","Limar en vaivén las desgarra. La forma ovalada es la más resistente."],
+["mani",3,"Pintar las uñas",20,3,"Pasá removedor o alcohol por cada uña para sacar restos de crema. Empujá las cutículas hacia atrás con un palito de naranjo, sin cortarlas, y recortá solo pellejos sueltos. Aplicá base fortalecedora, 2 capas finas de color y top coat, esperando entre capas.","La base evita que los esmaltes oscuros amarilleen la uña. Las cutículas protegen contra infecciones."],
+["cama",3,"Cambiar sábanas y toallas",10,3,"Poné sábanas limpias, llevá las toallas a lavar y abrí la ventana del cuarto un rato.","Las sábanas guardan sudor y bacterias, y vos no lo notás por olfato."],
+["listo",1,"Dejar todo listo para mañana",2,3,"Ponete el pijama limpio. Sacá ropa y medias limpias para mañana y llevá la ropa usada al cesto. Ropa interior, medias y remeras, un solo uso.","La ropa limpia es lo que más reduce el olor. Dejarlo preparado te saca decisiones de la mañana."]
+];
+var K=[
+["nariz",14,"Pelos de la nariz","Frente a un espejo con buena luz y la cabeza un poco hacia atrás, usá una recortadora de nariz o tijera de puntas redondeadas. Recortá solo lo que asoma, sin arrancar.","Arrancarlos puede causar infecciones. Hacen de filtro natural del aire, por eso solo se recortan."],
+["cej",14,"Cejas","Peinalas hacia arriba y recortá solo los pelos largos que sobresalen. Si depilás, solo los sueltos fuera de la forma natural.","Las mantiene prolijas sin cambiar tu expresión."],
+["axil",14,"Vello de las axilas","Con recortadora con peine o tijera, sobre piel limpia y seca.","Menos vello retiene menos sudor y bacterias, y por lo tanto menos olor."],
+["intim",21,"Vello íntimo","Con recortadora con peine, sobre piel limpia y seca. Evitá afeitar al ras: irrita y produce vellos encarnados.","Reduce la humedad y el olor en una zona donde se acumulan."],
+["pun",14,"Uñas de los pies","Cortalas rectas con cortaúñas, sin curvar las esquinas, y limá los bordes.","Evita las uñas encarnadas."],
+["esm",7,"Sacar el esmalte y descansar las uñas","Con algodón y removedor (mejor sin acetona), 10 segundos sobre cada uña y frotá suave. Hidratá con aceite y dejalas un día sin esmalte.","Usar esmalte sin pausa las debilita y las amarillea."],
+["ropa",7,"Lavar la ropa","Elegí un día fijo y lavá todo lo acumulado. Secala completamente antes de guardarla.","Es lo que más reduce el olor, y vos no podés detectar cuando una prenda ya huele."],
+["tall",7,"Lavar toallas y sábanas","Lavalas con agua tibia o caliente según la etiqueta y secalas bien. Las toallas se cambian cada 3 o 4 usos.","Guardan sudor y bacterias, y si quedan húmedas generan mal olor."],
+["pein",14,"Limpiar peines y cepillos","Sacales los pelos y remojalos 10 minutos en agua tibia con jabón. Secalos.","Acumulan grasa y suciedad que vuelven al pelo."],
+["piel",30,"Chequeo de piel","Frente a un espejo con buena luz, mirá lunares, manchas, granos, uñas y entre los dedos de los pies. Con el espejo del celular revisá la espalda. Fijate si hay cambios de forma, color o tamaño, sangrado, picazón persistente o heridas que no cierran. Si notás algo así, consultá a un dermatólogo.","Detectar cambios a tiempo es la mejor forma de cuidar la piel. Es una mirada de 5 minutos, no un diagnóstico."],
+["recm",7,"Limpiar la recortadora a fondo","Sacá los cabezales y cepillá los pelos. Pasá alcohol 70% a las hojas y dejá secar. Poné una gota de aceite de máquina en las hojas y encendela 5 segundos.","Las hojas sucias o secas tiran del pelo, irritan la piel y duran menos."],
+["kitm",7,"Desinfectar el kit de manicura","Pasá un algodón con alcohol 70% por cada herramienta, secá bien y guardalas secas. Limpiá el estuche por dentro con un paño.","Las herramientas sucias pueden causar infecciones en uñas y piel, y la humedad oxida los metales."],
+["hoja",14,"Cambiar la hoja de afeitar","Cambiala cada 3 a 5 afeitadas, o antes si tira o irrita. Enjuagá la máquina y secala después de cada uso. Tirá la hoja usada envuelta, con cuidado.","Una hoja gastada irrita, produce vellos encarnados y puede oxidarse."],
+["neces",30,"Limpiar el neceser","Vaciá el neceser, pasale un paño con agua y jabón por dentro y alcohol 70% en las mallas. Dejalo secar abierto antes de guardar todo.","Si guarda humedad se forma moho y mal olor, que no vas a notar."],
+["cepl",7,"Lavar cepillo de uñas, esponja y guante","Lavalos con jabón, enjuagá bien y dejalos secar al aire, no guardados mojados.","Retienen humedad y bacterias, justo lo que usás para limpiarte."],
+["funda",7,"Cambiar la funda de almohada","Cambiala una vez por semana, o cada 3 o 4 noches si tenés caspa o te acostás con el pelo húmedo. Lavala con agua tibia o caliente según la etiqueta.","Acumula grasa, escamas y sudor del cuero cabelludo, que vuelven al pelo y a la piel."]
+];
+var T=[["r","Rápida",1,"Tu mínimo de cada noche"],["m","Media",2,"2 o 3 noches por semana"],["c","Completa",3,"1 noche por semana, con todo"],["k","Mantenimiento",0,"Lo que se hace cada tanto"],["d","Descanso",0,"Hábitos que también cuidan el cuerpo"],["i","Mi kit",0,"Todo lo que necesitás, y lo que ya tenés"]];
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function mid(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()}
+var cur=ld("rit_t","r"),st=ld("rit_h",{d:0,h:{}}),mt=ld("rit_m",{});
+if(st.d!==mid()){st={d:mid(),h:{}};sv("rit_h",st)}
+if(!T.some(function(t){return t[0]===cur}))cur="r";
+var I=[
+["pasta","Pasta de dientes","Boca","No la vi en tus fotos"],
+["cepdie","Cepillo de dientes","Boca"],
+["hilo","Hilo dental","Boca"],
+["lengua","Limpiador de lengua","Boca","O el cepillo de dientes, con suavidad"],
+["shamp","Shampoo","Pelo y barba","Tus Clear, Ulmen y Pantene"],
+["acon","Acondicionador","Pelo y barba"],
+["masc","Mascarilla de pelo","Pelo y barba","Opcional, para la rutina completa"],
+["peine","Peine de dientes anchos","Pelo y barba"],
+["micro","Toalla de microfibra o remera","Pelo y barba","Para secar el pelo sin frotar"],
+["bacei","Aceite o bálsamo de barba","Pelo y barba"],
+["bpein","Peine o cepillo de barba","Pelo y barba"],
+["jabon","Jabón de cuerpo y cara","Cuerpo y cara","Tu Avon con ácido salicílico"],
+["espon","Guante o esponja exfoliante","Cuerpo y cara"],
+["pomez","Piedra pómez o lima de pies","Cuerpo y cara"],
+["toalla","Toalla limpia","Cuerpo y cara"],
+["cremac","Crema corporal","Cuerpo y cara","Tu Burn Lines"],
+["exfacial","Exfoliante facial suave","Cuerpo y cara"],
+["hidr","Hidratante de cara","Cuerpo y cara"],
+["labial","Bálsamo labial","Cuerpo y cara"],
+["sol","Protector solar","Cuerpo y cara","Para la mañana"],
+["antit","Antitranspirante","Axilas y pies","Tu Adidas Pro Invisible"],
+["desod","Desodorante o fragancia","Axilas y pies","Opcional, tu Axe"],
+["talco","Talco para pies","Axilas y pies","Tu Rexona Pés"],
+["cepunas","Cepillo de uñas","Manos y uñas"],
+["lima","Lima de uñas","Manos y uñas","Grano fino o de vidrio"],
+["aceitec","Aceite de cutículas","Manos y uñas"],
+["cremam","Crema de manos","Manos y uñas"],
+["palito","Empujador de cutículas","Manos y uñas","Está en tu kit"],
+["cortau","Cortaúñas","Manos y uñas","Está en tu kit"],
+["esmal","Esmalte de color","Manos y uñas"],
+["base","Base y top coat","Manos y uñas"],
+["remov","Removedor sin acetona y algodones","Manos y uñas"],
+["alcohol","Alcohol 70%","Manos y uñas","También para desinfectar herramientas"],
+["recort","Recortadora con peine guía","Afeitado y recorte","Verificá que traiga peine guía"],
+["nariz","Cabezal de nariz","Afeitado y recorte","Viene en tu recortadora"],
+["tijera","Tijera pequeña","Afeitado y recorte"],
+["afei","Espuma y máquina de afeitar","Afeitado y recorte"],
+["enjuag","Enjuague bucal (opcional)","Boca"],
+["jabonn","Jabón neutro sin perfume","Cuerpo y cara","Para la zona íntima"],
+["cespa","Cepillo de espalda de mango largo (opcional)","Cuerpo y cara"],
+["palang","Palangana o balde para los pies","Cuerpo y cara"],
+["sal","Sal gruesa o de Epsom (opcional)","Cuerpo y cara"],
+["cotone","Cotonetes","Cuerpo y cara","Solo para el ombligo y por fuera de las orejas"],
+["aceitem","Aceite de máquina para los cabezales","Afeitado y recorte"],
+["hojas","Hojas de afeitar de repuesto","Afeitado y recorte","Tenés un pack de 4"],
+["sabanas","Sábanas limpias de repuesto","Casa y ropa"],
+["cesto","Cesto de ropa sucia","Casa y ropa"],
+["pijama","Pijama de algodón","Casa y ropa"]
+];
+var HV=["cepdie","shamp","acon","peine","bacei","bpein","jabon","toalla","cremac","antit","desod","talco","palito","cortau","esmal","recort","nariz","tijera","afei","hojas"];
+var N={dient:["pasta","cepdie","hilo","lengua","enjuag"],barbaR:["recort","bpein"],ducha:["jabon","cespa"],exfc:["espon"],pies:["pomez"],pelo:["shamp"],acon:["acon"],masc:["masc"],barba:["shamp","acon"],cara:["jabon"],exff:["exfacial"],unas1:["cepunas"],seca:["toalla"],anti:["antit"],crcu:["cremac"],cara2:["hidr","labial"],barbaA:["bacei","bpein"],peina:["micro","peine"],piesh:["cremac","talco"],manos:["cremam","aceitec"],lima:["lima"],mani:["esmal","base","remov","alcohol","palito"],cama:["sabanas"],listo:["pijama","cesto"],remojo:["palang","sal"],intima:["jabonn"],orej:["cotone","alcohol"]};
+var NK={nariz:["nariz"],cej:["tijera"],axil:["recort"],intim:["recort"],pun:["cortau","lima"],esm:["remov"],recm:["alcohol","aceitem"],kitm:["alcohol"],hoja:["hojas"]};
+var inv=ld("rit_i",null),onlyMiss=false;
+var D=[
+["estman","Estirar manos y muñecas","Durante 2 minutos, abrí y cerrá los puños, girá las muñecas en círculos y estirá suavemente cada dedo hacia atrás. Hacelo después de dibujar o usar la compu.","Tus manos trabajan mucho, y estirarlas previene la tensión."],
+["estcue","Estirar cuello y hombros","Durante 5 minutos, inclinà la cabeza hacia cada lado, rotá los hombros hacia atrás y estirá los brazos sobre la cabeza, sin llegar al dolor.","Pasar horas sentado carga el cuello y la espalda."],
+["vista","Descanso de la vista","Cada 20 minutos de pantalla, mirá algo lejano durante 20 segundos y parpadeá varias veces.","Reduce la fatiga y la sequedad de los ojos."],
+["agua","Tomar agua","Tené un vaso o una botella a mano y tomá a lo largo del día.","La hidratación ayuda a la piel, la energía y la concentración."],
+["pant","Pantallas apagadas antes de dormir","Dejá el celular y la compu 30 a 60 minutos antes de acostarte. Usá ese rato para tu rutina nocturna, leer o dibujar.","La luz de las pantallas retrasa el sueño."],
+["hdorm","Acostarte a una hora parecida","Elegí un horario razonable y tratá de mantenerlo, incluso los fines de semana.","El cuerpo descansa mejor con horarios regulares."],
+["mas","Automasaje con música","Durante 5 minutos, masajeá manos, pies o cuero cabelludo con crema o aceite mientras escuchás música.","Relaja y es un momento de cuidado para vos."],
+["resp","Respirar lento","Durante 5 minutos, sentado y sin pantallas, inhalá 4 segundos y exhalá 6.","Ayuda a bajar la sensación de estar abrumado."],
+["sinp","Un rato sin pantalla","Un paseo corto, dibujar en papel o simplemente descansar, sin celular.","Descansar la cabeza también cuida el cuerpo."]
+];
+var dd=ld("rit_dd",{d:0,ids:{}});
+if(dd.d!==mid()){dd={d:mid(),ids:{}};sv("rit_dd",dd)}
+if(!inv){inv={};HV.forEach(function(k){inv[k]=1})}
+function need(a){if(!a||!a.length)return "";return '<div class="need"><b>Necesitás:</b><div class="chips">'+a.map(function(k){var x=I.filter(function(i){return i[0]===k})[0];return x?'<span class="chip '+(inv[k]?"ok":"no")+'">'+(inv[k]?"✓ ":"Falta: ")+x[1]+'</span>':""}).join("")+'</div></div>'}
+function miss(list){var m={},n=0;list.forEach(function(s){(N[s[0]]||[]).forEach(function(k){if(!inv[k]&&!m[k]){m[k]=1;n++}})});return n?" Te faltan "+n+(n===1?" cosa":" cosas")+" de tu lista para esta rutina.":""}
+function vis(l){return S.filter(function(s){return s[1]<=l&&!(s[1]<l&&s[0]==="acon"&&l===3)})}
+function render(){
+  var tab=T.filter(function(t){return t[0]===cur})[0],h="",nv=0,nd=0;
+  document.getElementById("nav").innerHTML=T.map(function(t){return '<button role="tab" data-t="'+t[0]+'" aria-selected="'+(t[0]===cur)+'">'+t[1]+'</button>'}).join("");
+  if(cur==="i"){
+    var cats=[],hv=I.filter(function(x){return inv[x[0]]}).length;
+    nv=I.length;nd=hv;
+    h='<p class="intro">'+tab[3]+'<small>Tocá el círculo cuando consigas algo. Los pasos te dicen qué necesitás de esta lista. Marqué como que ya tenés lo que vi en tus fotos, ajustalo a tu realidad.</small></p><p class="sum"><b>'+hv+' de '+nv+'</b> · te faltan '+(nv-hv)+'</p><button class="mk" data-a="mis">'+(onlyMiss?"Ver todo":"Ver solo lo que falta")+'</button>';
+    I.forEach(function(x){if(cats.indexOf(x[2])<0)cats.push(x[2])});
+    cats.forEach(function(ct){var its=I.filter(function(x){return x[2]===ct&&(!onlyMiss||!inv[x[0]])});if(!its.length)return;
+      h+='<h3 class="ct">'+ct+'</h3>';
+      its.forEach(function(x){h+='<div class="it'+(inv[x[0]]?" have":"")+'"><button data-i="'+x[0]+'" aria-label="Tengo '+x[1]+'">'+(inv[x[0]]?"✓":"")+'</button><span>'+x[1]+(x[3]?'<small>'+x[3]+'</small>':'')+'</span></div>'})});
+  }else if(cur==="d"){
+    nv=D.length;nd=D.filter(function(x){return dd.ids[x[0]]}).length;
+    h='<p class="intro">'+tab[3]+'<small>Elegí los que puedas hoy, no hace falta hacerlos todos. Se reinician cada día.</small></p>';
+    D.forEach(function(x){var on=dd.ids[x[0]];h+='<div class="it dd'+(on?" have":"")+'"><button data-d="'+x[0]+'" aria-label="Marcar '+x[1]+'">'+(on?"✓":"")+'</button><details><summary><span class="t">'+x[1]+'</span></summary><p><b>Cómo:</b> '+x[2]+'</p><p><b>Para qué:</b> '+x[3]+'</p></details></div>'});
+  }else if(cur==="k"){
+    var rows=K.map(function(k){var l=mt[k[0]],n=l?Math.round((mid()-l)/864e5):null;return {k:k,n:n,due:n===null||n>=k[1]}});
+    rows.sort(function(a,b){return (b.due?1:0)-(a.due?1:0)});
+    h='<p class="intro">'+tab[3]+'<small>Aparece “toca” cuando pasó el tiempo recomendado. Tocá “Hecho hoy” para reiniciar la cuenta.</small></p><ul>';
+    rows.forEach(function(r){var k=r.k,s=r.n===null?"sin registro, toca":(r.n===0?"hecho hoy":"hecho hace "+r.n+(r.n===1?" día":" días")+(r.due?", toca":""));
+      h+='<li class="k '+(r.due?"due":"")+'"><div style="flex:1;min-width:0"><details><summary><span class="t">'+k[2]+'</span></summary><p><b>Cómo:</b> '+k[3]+'</p><p><b>Para qué:</b> '+k[4]+'</p>'+need(NK[k[0]])+'</details><div class="st">Cada '+k[1]+' días · '+s+'</div></div><button class="mk" data-k="'+k[0]+'">Hecho hoy</button></li>'});
+    h+="</ul>";nv=rows.length;nd=rows.filter(function(r){return !r.due}).length;
+  }else{
+    var L=tab[2],list=S.filter(function(s){return s[1]<=L&&!(s[0]==="acon"&&L===3)}),tot=0,idx=-1,i;
+    list.forEach(function(s){tot+=s[3];if(st.h[s[0]])nd++});
+    nv=list.length;
+    for(i=0;i<nv;i++){if(!st.h[list[i][0]]){idx=i;break}}
+    h='<p class="intro">'+tab[3]+'<small>Unos '+tot+' minutos en total. Un paso a la vez.'+miss(list)+'</small></p><div class="bar">'+list.map(function(s,j){return '<i class="'+(st.h[s[0]]?"on":(j===idx?"cur":""))+'"></i>'}).join("")+'</div>';
+    if(idx<0){
+      h+='<div class="card"><h2>Rutina terminada</h2><p class="how">Hiciste todos los pasos de hoy. Buen trabajo.</p><div class="btns"><button class="btn" data-a="back">Atrás</button><button class="btn p" data-a="reset">Empezar de nuevo</button></div></div>';
+    }else{
+      var s=list[idx];
+      h+='<div class="card"><p class="ph">'+PH[s[4]]+'</p><h2>'+s[2]+'</h2><p class="mi">Paso '+(idx+1)+' de '+nv+' · '+s[3]+' min</p><p class="how"><b>Cómo:</b> '+s[5]+'</p><p class="why"><b>Para qué:</b> '+s[6]+'</p>'+need(N[s[0]])+'<div class="btns"><button class="btn" data-a="back">Atrás</button><button class="btn" data-a="skip">Saltar</button><button class="btn p" data-a="done">Listo, siguiente</button></div></div>';
+    }
+    var lp=-1;
+    h+='<details class="all"><summary>Ver todos los pasos</summary><ol>';
+    list.forEach(function(s){if(s[4]!==lp){lp=s[4];h+='<h3>'+PH[lp]+'</h3>'}h+='<li class="'+(st.h[s[0]]==="d"?"on":"")+'">'+s[2]+'<i>'+(st.h[s[0]]==="s"?"saltado":s[3]+" min")+'</i></li>'});
+    h+='</ol></details>';
+  }
+  h+='<p class="note">Tu progreso queda guardado en este celular y se reinicia cada día. Esta página no envía avisos: poné una alarma a la hora de tu rutina.</p>';
+  document.getElementById("main").innerHTML=h;
+  document.getElementById("moon").style.setProperty("--p",nv?Math.round(nd/nv*100):0);
+  document.getElementById("mt").textContent=nd+"/"+nv;
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.t){cur=b.dataset.t;sv("rit_t",cur);render();return}
+  if(b.dataset.i){inv[b.dataset.i]=inv[b.dataset.i]?0:1;sv("rit_i",inv);render();return}
+  if(b.dataset.a==="mis"){onlyMiss=!onlyMiss;render();return}
+  if(b.dataset.d){dd.ids[b.dataset.d]=dd.ids[b.dataset.d]?0:1;sv("rit_dd",dd);render();return}
+  if(b.dataset.k){mt[b.dataset.k]=mid();sv("rit_m",mt);render();return}
+  var a=b.dataset.a;if(!a)return;
+  var L=T.filter(function(t){return t[0]===cur})[0][2],list=S.filter(function(s){return s[1]<=L&&!(s[0]==="acon"&&L===3)}),i,idx=list.length;
+  for(i=0;i<list.length;i++){if(!st.h[list[i][0]]){idx=i;break}}
+  if(a==="done"||a==="skip")st.h[list[idx][0]]=a==="done"?"d":"s";
+  if(a==="back"&&idx>0)delete st.h[list[idx-1][0]];
+  if(a==="reset")list.forEach(function(s){delete st.h[s[0]]});
+  sv("rit_h",st);render();window.scrollTo(0,0);
+});
+render();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
