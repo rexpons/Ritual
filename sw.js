@@ -1,4 +1,4 @@
-var CACHE = "ritual-v1";
+var CACHE = "ritual-v3";
 var FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES); }));
@@ -10,18 +10,16 @@ self.addEventListener("activate", function (e) {
   }));
   self.clients.claim();
 });
+// Primero internet (así siempre ves la versión nueva) y, si no hay conexión, lo guardado.
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
   e.respondWith(
-    caches.match(e.request).then(function (hit) {
-      var net = fetch(e.request).then(function (res) {
-        if (res && (res.status === 200 || res.type === "opaque")) {
-          var copy = res.clone();
-          caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
-        }
-        return res;
-      }).catch(function () { return hit; });
-      return hit || net;
-    })
+    fetch(e.request).then(function (res) {
+      if (res && (res.status === 200 || res.type === "opaque")) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+      }
+      return res;
+    }).catch(function () { return caches.match(e.request); })
   );
 });

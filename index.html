@@ -76,6 +76,13 @@ details b{color:var(--ac)}
 .it span{flex:1}
 .it.dd{align-items:flex-start}
 .it.dd details{flex:1}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:14px}
+.wd{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;border:1px solid var(--ln);border-radius:10px;background:none;color:var(--tx);font:inherit;cursor:pointer;min-width:0}
+.wd span{font-size:12px;color:var(--mu)}
+.wd b{font-size:11px;letter-spacing:1px;color:var(--ac)}
+.wd small{font-size:10px;color:var(--mu)}
+.wd.td{border-color:var(--ac)}
+.wd.sl{background:var(--sf)}
 .it small{display:block;color:var(--mu);font-size:13px}
 button:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 </style>
@@ -136,11 +143,11 @@ var K=[
 ["cepl",7,"Lavar cepillo de uñas, esponja y guante","Lavalos con jabón, enjuagá bien y dejalos secar al aire, no guardados mojados.","Retienen humedad y bacterias, justo lo que usás para limpiarte."],
 ["funda",7,"Cambiar la funda de almohada","Cambiala una vez por semana, o cada 3 o 4 noches si tenés caspa o te acostás con el pelo húmedo. Lavala con agua tibia o caliente según la etiqueta.","Acumula grasa, escamas y sudor del cuero cabelludo, que vuelven al pelo y a la piel."]
 ];
-var T=[["r","Rápida",1,"Tu mínimo de cada noche"],["m","Media",2,"2 o 3 noches por semana"],["c","Completa",3,"1 noche por semana, con todo"],["k","Mantenimiento",0,"Lo que se hace cada tanto"],["d","Descanso",0,"Hábitos que también cuidan el cuerpo"],["i","Mi kit",0,"Todo lo que necesitás, y lo que ya tenés"]];
+var T=[["w","Semana",0,"Tu plan de la semana"],["r","Rápida",1,"Tu mínimo de cada noche"],["m","Media",2,"2 o 3 noches por semana"],["c","Completa",3,"1 noche por semana, con todo"],["k","Mantenimiento",0,"Lo que se hace cada tanto"],["d","Descanso",0,"Hábitos que también cuidan el cuerpo"],["i","Mi kit",0,"Todo lo que necesitás, y lo que ya tenés"]];
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function mid(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()}
-var cur=ld("rit_t","r"),st=ld("rit_h",{d:0,h:{}}),mt=ld("rit_m",{});
+var cur="w",st=ld("rit_h",{d:0,h:{}}),mt=ld("rit_m",{});
 if(st.d!==mid()){st={d:mid(),h:{}};sv("rit_h",st)}
 if(!T.some(function(t){return t[0]===cur}))cur="r";
 var I=[
@@ -210,6 +217,7 @@ var D=[
 ];
 var dd=ld("rit_dd",{d:0,ids:{}});
 if(dd.d!==mid()){dd={d:mid(),ids:{}};sv("rit_dd",dd)}
+var plan=ld("rit_p",[3,1,2,1,2,1,2]),hist=ld("rit_hist",{}),sel=null;
 if(!inv){inv={};HV.forEach(function(k){inv[k]=1})}
 function need(a){if(!a||!a.length)return "";return '<div class="need"><b>Necesitás:</b><div class="chips">'+a.map(function(k){var x=I.filter(function(i){return i[0]===k})[0];return x?'<span class="chip '+(inv[k]?"ok":"no")+'">'+(inv[k]?"✓ ":"Falta: ")+x[1]+'</span>':""}).join("")+'</div></div>'}
 function miss(list){var m={},n=0;list.forEach(function(s){(N[s[0]]||[]).forEach(function(k){if(!inv[k]&&!m[k]){m[k]=1;n++}})});return n?" Te faltan "+n+(n===1?" cosa":" cosas")+" de tu lista para esta rutina.":""}
@@ -217,7 +225,20 @@ function vis(l){return S.filter(function(s){return s[1]<=l&&!(s[1]<l&&s[0]==="ac
 function render(){
   var tab=T.filter(function(t){return t[0]===cur})[0],h="",nv=0,nd=0;
   document.getElementById("nav").innerHTML=T.map(function(t){return '<button role="tab" data-t="'+t[0]+'" aria-selected="'+(t[0]===cur)+'">'+t[1]+'</button>'}).join("");
-  if(cur==="i"){
+  if(cur==="w"){
+    var tdy=new Date(),td=tdy.getDay(),vd=sel===null?td:sel,wl=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],wn=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],ln={1:"Rápida",2:"Media",3:"Completa"},ds={1:"Lo mínimo de cada noche: dientes, ducha, antitranspirante, manos y ropa lista.",2:"Suma pelo, barba, cara y limado de uñas a la rápida.",3:"Todo el cuidado: remojo de pies, exfoliaciones, mascarilla, crema corporal, uñas pintadas y cambio de sábanas."},hd=[],dk;
+    nv=7;nd=0;
+    h='<p class="intro">Tu semana<small>El domingo es el día completo y la media y la rápida se reparten en el resto. Tocá un día para verlo.</small></p><div class="wk">';
+    for(i=0;i<7;i++){
+      dk=new Date(tdy.getFullYear(),tdy.getMonth(),tdy.getDate()-td+i).getTime();
+      var dn=hist[dk]?1:0;nd+=dn;if(plan[i]>1)hd.push(wl[i]);
+      h+='<button class="wd'+(i===td?' td':'')+(i===vd?' sl':'')+'" data-w="'+i+'"><span>'+wl[i]+'</span><b>'+'●'.repeat(plan[i])+'○'.repeat(3-plan[i])+'</b><small>'+(dn?'✓ ':'')+ln[plan[i]]+'</small></button>';
+    }
+    h+='</div>';
+    var wL=plan[vd],wlist=S.filter(function(s){return s[1]<=wL&&!(s[0]==="acon"&&wL===3)}),wm=0,wdn=0;
+    wlist.forEach(function(s){wm+=s[3];if(vd===td&&st.h[s[0]])wdn++});
+    h+='<div class="card"><p class="ph">'+(vd===td?'Hoy, ':'')+wn[vd]+'</p><h2>Rutina '+ln[wL].toLowerCase()+'</h2><p class="mi">'+wlist.length+' pasos · unos '+wm+' min'+(wL>1?' · día de pelo':'')+(vd===td&&wdn?' · hechos '+wdn+' de '+wlist.length:'')+'</p><p class="how">'+ds[wL]+'</p><div class="btns"><button class="btn" data-a="lvl">Cambiar nivel</button><button class="btn p" data-a="go">'+(vd===td?'Empezar la de hoy':'Ver esta rutina')+'</button></div></div><p class="sum">Lavás el pelo '+hd.length+' veces por semana: '+hd.join(', ')+'.</p>';
+  }else if(cur==="i"){
     var cats=[],hv=I.filter(function(x){return inv[x[0]]}).length;
     nv=I.length;nd=hv;
     h='<p class="intro">'+tab[3]+'<small>Tocá el círculo cuando consigas algo. Los pasos te dicen qué necesitás de esta lista. Marqué como que ya tenés lo que vi en tus fotos, ajustalo a tu realidad.</small></p><p class="sum"><b>'+hv+' de '+nv+'</b> · te faltan '+(nv-hv)+'</p><button class="mk" data-a="mis">'+(onlyMiss?"Ver todo":"Ver solo lo que falta")+'</button>';
@@ -253,7 +274,7 @@ function render(){
     list.forEach(function(s){if(s[4]!==lp){lp=s[4];h+='<h3>'+PH[lp]+'</h3>'}h+='<li class="'+(st.h[s[0]]==="d"?"on":"")+'">'+s[2]+'<i>'+(st.h[s[0]]==="s"?"saltado":s[3]+" min")+'</i></li>'});
     h+='</ol></details>';
   }
-  h+='<p class="note">Tu progreso queda guardado en este celular y se reinicia cada día. Esta página no envía avisos: poné una alarma a la hora de tu rutina.</p>';
+  h+='<p class="note">Tu progreso queda guardado en este celular y se reinicia cada día. Esta página no envía avisos: poné una alarma a la hora de tu rutina. Versión 3, con calendario semanal.</p>';
   document.getElementById("main").innerHTML=h;
   document.getElementById("moon").style.setProperty("--p",nv?Math.round(nd/nv*100):0);
   document.getElementById("mt").textContent=nd+"/"+nv;
@@ -264,6 +285,9 @@ document.addEventListener("click",function(e){
   if(b.dataset.i){inv[b.dataset.i]=inv[b.dataset.i]?0:1;sv("rit_i",inv);render();return}
   if(b.dataset.a==="mis"){onlyMiss=!onlyMiss;render();return}
   if(b.dataset.d){dd.ids[b.dataset.d]=dd.ids[b.dataset.d]?0:1;sv("rit_dd",dd);render();return}
+  if(b.dataset.w){sel=+b.dataset.w;render();return}
+  if(b.dataset.a==="lvl"){var lv2=sel===null?new Date().getDay():sel;plan[lv2]=plan[lv2]%3+1;sv("rit_p",plan);render();return}
+  if(b.dataset.a==="go"){var gv=sel===null?new Date().getDay():sel;cur={1:"r",2:"m",3:"c"}[plan[gv]];sv("rit_t",cur);render();window.scrollTo(0,0);return}
   if(b.dataset.k){mt[b.dataset.k]=mid();sv("rit_m",mt);render();return}
   var a=b.dataset.a;if(!a)return;
   var L=T.filter(function(t){return t[0]===cur})[0][2],list=S.filter(function(s){return s[1]<=L&&!(s[0]==="acon"&&L===3)}),i,idx=list.length;
@@ -271,7 +295,7 @@ document.addEventListener("click",function(e){
   if(a==="done"||a==="skip")st.h[list[idx][0]]=a==="done"?"d":"s";
   if(a==="back"&&idx>0)delete st.h[list[idx-1][0]];
   if(a==="reset")list.forEach(function(s){delete st.h[s[0]]});
-  sv("rit_h",st);render();window.scrollTo(0,0);
+  sv("rit_h",st);if(list.every(function(s){return st.h[s[0]]})){hist[mid()]=L;sv("rit_hist",hist)}render();window.scrollTo(0,0);
 });
 render();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
